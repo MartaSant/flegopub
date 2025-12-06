@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Flègo · Sorsi & Morsi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Flègo · Sorsi & Morsi – Pub, taglieri, burger, birre e cocktail.">
+    
+    <!-- Meta tag iOS (PWA/Home Screen) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Flègo">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FFC928">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="logo.ico">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://flegopub.github.io/">
+    
+    <!-- Preconnect per CDN esterni (performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://flegopub.github.io/">
+    <meta property="og:title" content="Flègo · Sorsi & Morsi">
+    <meta property="og:description" content="Pub, taglieri, burger, birre e cocktail a due passi dallo stadio. Piazza Gabriele D'Annunzio, 11/14, 80125 Napoli (NA)">
+    <meta property="og:image" content="https://flegopub.github.io/logo.png">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:site_name" content="Flègo · Sorsi & Morsi">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://flegopub.github.io/">
+    <meta name="twitter:title" content="Flègo · Sorsi & Morsi">
+    <meta name="twitter:description" content="Pub, taglieri, burger, birre e cocktail a due passi dallo stadio. Piazza Gabriele D'Annunzio, 11/14, 80125 Napoli (NA)">
+    <meta name="twitter:image" content="https://flegopub.github.io/logo.png">
+    
+    <!-- Meta tag per disabilitare la cache del browser -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="shell-body">
+    <div class="desktop-wrapper">
+        <div class="device-frame">
+            <iframe
+                src="home.html"
+                title="Flègo · Sorsi &amp; Morsi"
+                class="device-iframe"
+            ></iframe>
+        </div>
+    </div>
+    <script>
+        // Registrazione Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(function(registration) {
+                        console.log('Service Worker registrato con successo:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('Registrazione Service Worker fallita:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
