@@ -51,10 +51,22 @@ function loadGA4() {
                 'ad_personalization': 'granted'
             });
             
-            // Invia page_view se non è stato ancora inviato
+            // Riconfigura GA4 per abilitare il tracking
             gtag('config', GA_MEASUREMENT_ID, {
                 'send_page_view': true
             });
+            
+            // Invia manualmente page_view per assicurarsi che venga tracciato
+            setTimeout(function() {
+                if (window.gtag && typeof window.gtag === 'function') {
+                    gtag('event', 'page_view', {
+                        'page_title': document.title,
+                        'page_location': window.location.href,
+                        'page_path': window.location.pathname
+                    });
+                    console.log('Page view inviato manualmente (GA4 già pronto)');
+                }
+            }, 100);
         }
         return;
     }
@@ -86,10 +98,23 @@ function loadGA4() {
             'ad_personalization': 'granted'
         });
         
-        // Abilita page_view
+        // Riconfigura GA4 per abilitare il tracking
         gtag('config', GA_MEASUREMENT_ID, {
             'send_page_view': true
         });
+        
+        // Invia manualmente page_view per assicurarsi che venga tracciato
+        // Questo è necessario perché la riconfigurazione potrebbe non inviare automaticamente il page_view
+        setTimeout(function() {
+            if (window.gtag && typeof window.gtag === 'function') {
+                gtag('event', 'page_view', {
+                    'page_title': document.title,
+                    'page_location': window.location.href,
+                    'page_path': window.location.pathname
+                });
+                console.log('Page view inviato manualmente (tag già presente)');
+            }
+        }, 100);
         
         ga4Loading = false;
         ga4Ready = true;
@@ -140,7 +165,7 @@ function loadGA4() {
             'ad_personalization': 'granted'
         });
         
-        // Forza l'invio di page_view se non è stato ancora inviato automaticamente
+        // Forza l'invio di page_view dopo aver aggiornato il consenso
         // Questo è importante per le pagine caricate dopo l'accettazione dei cookie
         setTimeout(function() {
             if (window.gtag && typeof window.gtag === 'function') {
@@ -150,9 +175,9 @@ function loadGA4() {
                     'page_location': window.location.href,
                     'page_path': window.location.pathname
                 });
-                console.log('Page view inviato manualmente');
+                console.log('Page view inviato manualmente (script caricato dinamicamente)');
             }
-        }, 200);
+        }, 300);
     };
     
     script.onerror = function() {
@@ -387,6 +412,37 @@ function initCookieBanner() {
     }, 100);
 }
 
+// Funzione per inviare page_view se il consenso è già stato dato
+function sendPageViewIfConsented() {
+    if (hasAnalyticsConsent()) {
+        // Verifica che gtag sia disponibile, se non lo è aspetta
+        const checkGtag = setInterval(function() {
+            if (window.gtag && typeof window.gtag === 'function' && window.dataLayer) {
+                clearInterval(checkGtag);
+                // Aggiorna il consenso per essere sicuri
+                gtag('consent', 'update', {
+                    'ad_storage': 'granted',
+                    'analytics_storage': 'granted',
+                    'ad_user_data': 'granted',
+                    'ad_personalization': 'granted'
+                });
+                // Invia page_view
+                gtag('event', 'page_view', {
+                    'page_title': document.title,
+                    'page_location': window.location.href,
+                    'page_path': window.location.pathname
+                });
+                console.log('Page view inviato automaticamente (consenso già dato)');
+            }
+        }, 100);
+        
+        // Timeout di sicurezza dopo 3 secondi
+        setTimeout(function() {
+            clearInterval(checkGtag);
+        }, 3000);
+    }
+}
+
 // Inizializza quando il DOM è pronto
 console.log('Stato DOM:', document.readyState);
 if (document.readyState === 'loading') {
@@ -394,10 +450,14 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
         console.log('DOMContentLoaded evento, inizializzo banner');
         initCookieBanner();
+        // Se il consenso è già stato dato, invia page_view
+        sendPageViewIfConsented();
     });
 } else {
     console.log('DOM già pronto, inizializzo banner immediatamente');
     initCookieBanner();
+    // Se il consenso è già stato dato, invia page_view
+    sendPageViewIfConsented();
 }
 
 // Ascolta i cambiamenti di localStorage per rilevare quando il consenso viene dato in altre pagine/iframe
