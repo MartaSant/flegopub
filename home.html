@@ -54,6 +54,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome per le icone social -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google tag (gtag.js) - Base tag per rilevamento da Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LKFE31RGZ9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        // Imposta Consent Mode v2 - tutti i storage negati di default
+        // Il consenso verrà aggiornato da ga-consent.js quando l'utente accetta
+        gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied'
+        });
+        
+        // Configura GA4 ma non invia dati finché il consenso non è dato
+        gtag('config', 'G-LKFE31RGZ9', {
+            'send_page_view': false  // Non inviare page_view automaticamente, sarà gestito da ga-consent.js
+        });
+    </script>
 </head>
 <body class="home-body">
     <div class="page">

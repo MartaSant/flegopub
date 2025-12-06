@@ -41,6 +41,21 @@ function loadGA4() {
         console.log('GA4 già caricato e pronto');
         ga4Ready = true;
         window.ga4Ready = true;
+        
+        // Se il consenso è stato dato, aggiorna il consenso e abilita il tracking
+        if (hasAnalyticsConsent()) {
+            gtag('consent', 'update', {
+                'ad_storage': 'granted',
+                'analytics_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted'
+            });
+            
+            // Invia page_view se non è stato ancora inviato
+            gtag('config', GA_MEASUREMENT_ID, {
+                'send_page_view': true
+            });
+        }
         return;
     }
     
@@ -60,6 +75,31 @@ function loadGA4() {
     ga4Loading = true;
     window.ga4Loading = true;
     
+    // Verifica se gtag è già presente (caricato dall'head)
+    if (window.gtag && typeof window.gtag === 'function') {
+        console.log('gtag già presente nell\'head, aggiorno solo il consenso');
+        // Il tag è già presente nell'head, aggiorna solo il consenso
+        gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'analytics_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted'
+        });
+        
+        // Abilita page_view
+        gtag('config', GA_MEASUREMENT_ID, {
+            'send_page_view': true
+        });
+        
+        ga4Loading = false;
+        ga4Ready = true;
+        window.ga4Loading = false;
+        window.ga4Ready = true;
+        console.log('GA4 abilitato (tag già presente nell\'head)');
+        return;
+    }
+    
+    // Se gtag non è presente, inizializza dataLayer e carica lo script
     // Inizializza dataLayer PRIMA di qualsiasi chiamata gtag
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
