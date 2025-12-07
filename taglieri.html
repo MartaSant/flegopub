@@ -499,7 +499,7 @@
         // Controllo immediato del consenso PRIMA che il DOM sia completamente caricato
         // Questo assicura che il banner venga mostrato/nascosto correttamente
         (function() {
-            const CONSENT_KEY = window.CONSENT_KEY || 'ga_consent';
+            const CONSENT_KEY = window.CONSENT_KEY || 'cookie_consent_ideflego';
             
             // Funzione per gestire il banner - legge il consenso ogni volta
             function handleBanner() {
@@ -616,8 +616,8 @@
     <script>
     // Script JavaScript per gestione bottone e banner modifica consenso cookie
     (function() {
-        // Usa la chiave globale da ga-consent.js, fallback a 'ga_consent' se non disponibile
-        const CONSENT_KEY = window.CONSENT_KEY || 'ga_consent';
+        // Usa la chiave globale da ga-consent.js, fallback a 'cookie_consent_ideflego' se non disponibile
+        const CONSENT_KEY = window.CONSENT_KEY || 'cookie_consent_ideflego';
         const settingsBtn = document.getElementById('cookieSettingsBtn');
         const settingsBanner = document.getElementById('cookie-settings-banner');
         const settingsOverlay = document.getElementById('cookie-settings-overlay');

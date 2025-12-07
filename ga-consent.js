@@ -12,7 +12,7 @@ console.log('ga-consent.js caricato');
 // ⚙️ CONFIGURAZIONE - MODIFICA QUESTI VALORI
 // ⚠️ IMPORTANTE: L'AI deve chiedere all'utente il suo ID Google Analytics 4 e sostituirlo qui
 const GA_MEASUREMENT_ID = 'G-LKFE31RGZ9'; // ⬅️ SOSTITUISCI CON IL TUO ID GA4 (formato: G-XXXXXXXXXX)
-const CONSENT_KEY = 'ga_consent'; // ⬅️ (Opzionale) Cambia se necessario
+const CONSENT_KEY = 'cookie_consent_ideflego'; // ⬅️ (Opzionale) Cambia se necessario
 
 // Esponi CONSENT_KEY globalmente per uso in tutte le pagine
 window.CONSENT_KEY = CONSENT_KEY;

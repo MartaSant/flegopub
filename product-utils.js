@@ -1,8 +1,8 @@
 // Utility per gestione preferiti e dettagli prodotto
 // Questo file deve essere incluso in tutte le pagine con prodotti
 
-// Inizializza dataLayer
-window.dataLayer = window.dataLayer || [];
+// Nota: dataLayer è già inizializzato nel tag GA4 nell'head delle pagine
+// Le inizializzazioni nelle funzioni sono fallback per sicurezza
 
 // Chiave per salvare i preferiti in localStorage
 const FAVORITES_KEY = 'flego_favorites';
