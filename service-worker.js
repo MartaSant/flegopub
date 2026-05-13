@@ -1,7 +1,7 @@
 // Service Worker per Flègo - Strategia Network First
 // Cache name con versione per facilitare aggiornamenti
-const CACHE_NAME = 'flegopub-v2';
-const RUNTIME_CACHE = 'flegopub-runtime-v2';
+const CACHE_NAME = 'flegopub-v3';
+const RUNTIME_CACHE = 'flegopub-runtime-v3';
 
 // File da mettere in cache all'installazione
 const PRECACHE_FILES = [

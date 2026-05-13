@@ -406,7 +406,11 @@
         }
         var url = waUrlForText(msg);
         e.currentTarget.href = url;
-        commitAfterHandoff();
+        /* Non svuotare subito: refreshDrawer su carrello vuoto rimette href="#" prima che il browser
+           esegua l'azione predefinita del link → su mobile sembra "non succede nulla". */
+        setTimeout(function () {
+            commitAfterHandoff();
+        }, 0);
     }
 
     function extractProductFromMenuItem(menuItem) {
