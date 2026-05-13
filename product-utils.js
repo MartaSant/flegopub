@@ -407,6 +407,12 @@ function initProductButtons() {
             }
         }
     });
+
+    setTimeout(function() {
+        if (window.FlegoOrderCart && typeof window.FlegoOrderCart.attachAddButtons === 'function') {
+            window.FlegoOrderCart.attachAddButtons();
+        }
+    }, 0);
 }
 
 // Inizializza quando il DOM è pronto
