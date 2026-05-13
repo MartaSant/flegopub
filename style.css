@@ -1721,6 +1721,23 @@ button {
     margin-bottom: 0.6rem;
 }
 
+.flego-cart-table {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0.4rem;
+    border: 1px solid rgba(255, 201, 40, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    padding: 0.55rem 0.65rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.flego-cart-table::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+}
+
 .flego-cart-note::placeholder {
     color: rgba(255, 255, 255, 0.45);
 }

@@ -170,7 +170,7 @@
         return 'FLG-' + y + m + day + '-' + h + min + s + '-' + rand;
     }
 
-    function buildWhatsAppMessage(orderId, note) {
+    function buildWhatsAppMessage(orderId, tableCode, note) {
         var lines = getCart();
         var parts = [];
         parts.push('*ORDINE ' + orderId + '*');
@@ -187,6 +187,10 @@
         }
         if (t.unparsed > 0) {
             parts.push('_Altre voci senza totale automatico nel messaggio._');
+        }
+        if (tableCode && String(tableCode).trim()) {
+            parts.push('');
+            parts.push('*Codice tavolo:* ' + String(tableCode).trim());
         }
         if (note && String(note).trim()) {
             parts.push('');
@@ -233,8 +237,10 @@
             '<button type="button" class="flego-cart-drawer-close" aria-label="Chiudi carrello"><i class="fas fa-times"></i></button>' +
             '</div>' +
             '<div id="flego-cart-drawer-body" class="flego-cart-drawer-body"></div>' +
+            '<label class="flego-cart-note-label" for="flego-cart-table">Codice tavolo (opzionale)</label>' +
+            '<input type="text" id="flego-cart-table" class="flego-cart-table" maxlength="40" placeholder="Es. 12, A3…" autocomplete="off">' +
             '<label class="flego-cart-note-label" for="flego-cart-note">Nota (opzionale)</label>' +
-            '<textarea id="flego-cart-note" class="flego-cart-note" rows="2" placeholder="Es. nome, tavolo, orario…"></textarea>' +
+            '<textarea id="flego-cart-note" class="flego-cart-note" rows="2" placeholder="Es. orario, richieste…"></textarea>' +
             '<div id="flego-cart-total" class="flego-cart-total"></div>' +
             '<div id="flego-cart-alert" class="flego-cart-alert" role="alert" hidden></div>' +
             '<a id="flego-cart-send" class="flego-cart-send" role="button" href="#" target="_blank" rel="noopener noreferrer">Invia ordine con WhatsApp</a>';
@@ -254,6 +260,7 @@
         els.alert = document.getElementById('flego-cart-alert');
         els.send = document.getElementById('flego-cart-send');
         els.note = document.getElementById('flego-cart-note');
+        els.table = document.getElementById('flego-cart-table');
     }
 
     function hideAlert() {
@@ -375,6 +382,7 @@
 
     function commitAfterHandoff() {
         clearCart();
+        if (els.table) els.table.value = '';
         if (els.note) els.note.value = '';
         hideAlert();
         refreshCartUI();
@@ -395,9 +403,11 @@
             return;
         }
         var orderId = generateOrderId();
+        var tableEl = document.getElementById('flego-cart-table');
         var noteEl = document.getElementById('flego-cart-note');
+        var tableCode = tableEl ? tableEl.value : '';
         var note = noteEl ? noteEl.value : '';
-        var msg = buildWhatsAppMessage(orderId, note);
+        var msg = buildWhatsAppMessage(orderId, tableCode, note);
         var encodedLen = encodeURIComponent(msg).length;
         if (encodedLen > WA_TEXT_SAFE_CHARS) {
             e.preventDefault();
